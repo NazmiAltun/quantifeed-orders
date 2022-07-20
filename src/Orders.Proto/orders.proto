@@ -1,0 +1,42 @@
+syntax = "proto3";
+
+package orders.proto;
+
+option csharp_namespace = "Orders.Proto";
+
+service OrderService {
+    rpc ProcessOrders(OrdersRequest) returns (ProcessOrdersResponse) {}
+}
+
+message OrdersRequest {
+    repeated Order orders = 1;
+}
+
+message Order {
+    string order_id = 1;
+    OrderType type = 2;
+    string currency = 3;
+    string symbol = 4;
+    double notional_amount = 5;
+    string destination = 6;
+    string client_id = 7;
+    double weight = 8;
+    repeated Order child_orders = 9;
+}
+
+enum OrderType {
+    Limit = 0;
+    Market = 1;
+}
+
+message ProcessOrdersResponse {
+    bool successful = 1;
+    repeated ValidationResult validation_results = 2;
+}
+
+message ValidationResult {
+    string property_name = 1;
+    string error_code = 2 ;
+    string error_message = 3;
+    string attempted_value = 4;
+}
