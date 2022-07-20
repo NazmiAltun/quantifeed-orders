@@ -2,11 +2,11 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 
 using FluentValidation;
+using Orders.Api.Extensions;
 using Orders.Api.Models;
 
-namespace Orders.Api.Validators;
+namespace Orders.Api.Validation;
 
-//TODO: Error messages
 public class OrderValidator : AbstractValidator<Order>
 {
     private readonly HashSet<string> _currencyCodes;
@@ -30,6 +30,7 @@ public class OrderValidator : AbstractValidator<Order>
     {
         RuleFor(o => o.OrderId)
             .NotEmpty()
+            .WithMessage(ErrorMessages.OrderIdCannotBeEmpty)
             .WithErrorCode(ErrorCodes.OrderIdCannotBeEmpty);
     }
 
@@ -44,6 +45,7 @@ public class OrderValidator : AbstractValidator<Order>
     {
         RuleFor(o => o.Symbol)
             .NotEmpty()
+            .WithMessage(o => ErrorMessages.SymbolCannotBeEmpty.Format(o.OrderId))
             .WithErrorCode(ErrorCodes.SymbolCannotBeEmpty);
     }
 
@@ -58,6 +60,7 @@ public class OrderValidator : AbstractValidator<Order>
     {
         RuleFor(o => o.Destination)
             .NotEmpty()
+            .WithMessage(o => ErrorMessages.DestinationCannotBeEmpty.Format(o.OrderId))
             .WithErrorCode(ErrorCodes.DestinationCannotBeEmpty);
     }
 
@@ -65,6 +68,7 @@ public class OrderValidator : AbstractValidator<Order>
     {
         RuleFor(o => o.ClientId)
             .NotEmpty()
+            .WithMessage(o => ErrorMessages.ClientIdCannotBeEmpty.Format(o.OrderId))
             .WithErrorCode(ErrorCodes.ClientIdCannotBeEmpty);
     }
 

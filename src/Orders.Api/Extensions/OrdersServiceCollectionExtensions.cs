@@ -4,12 +4,12 @@
 using System.Text.Json;
 using System.Text.Json.Nodes;
 using Orders.Api.Repositories;
-using Orders.Api.Validators;
+using Orders.Api.Validation;
 using StackExchange.Redis;
 
 namespace Orders.Api.Extensions;
 
-public static class OrdersServiceCollectionExtensions
+internal static class OrdersServiceCollectionExtensions
 {
     private const string CurrenciesDataSourceFile = "currencies.json";
 

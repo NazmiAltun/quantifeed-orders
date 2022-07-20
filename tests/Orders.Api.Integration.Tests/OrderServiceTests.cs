@@ -55,7 +55,7 @@ public class OrderServiceTests : IClassFixture<WebApplicationFactory>
 
         await ShouldHaveValidationErrorsAndOrdersNotPersisted(response, request);
     }
-    
+
     private async Task ShouldBeValidatedAndPersisted(
         ProcessOrdersResponse response,
         OrdersRequest request)

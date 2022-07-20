@@ -4,7 +4,7 @@
 using Grpc.Core;
 using Orders.Api.Helpers;
 using Orders.Api.Repositories;
-using Orders.Api.Validators;
+using Orders.Api.Validation;
 using Orders.Proto;
 using OrdersRequest = Orders.Proto.OrdersRequest;
 

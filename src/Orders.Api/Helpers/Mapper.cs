@@ -2,8 +2,10 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 
 using FluentValidation.Results;
+using Orders.Api.Extensions;
 using Orders.Api.Models;
 using Orders.Api.Repositories;
+using Orders.Api.Validation;
 using Orders.Proto;
 using OrdersRequest = Orders.Proto.OrdersRequest;
 using OrderType = Orders.Api.Models.OrderType;
@@ -71,8 +73,8 @@ internal static class Mapper
         var response = new ProcessOrdersResponse();
         var orderValidationResults = saveResult.ExistingOrderIds.Select(id => new ValidationResult
         {
-            //TODO:Error Message
-            ErrorCode = ErrorCodes.OrdersMustHaveUniqueId,
+            ErrorMessage = ErrorMessages.OrderIdAlreadyExists.Format(id),
+            ErrorCode = ErrorCodes.OrderIdAlreadyExists,
             AttemptedValue = id,
         });
         response.ValidationResults.AddRange(orderValidationResults);

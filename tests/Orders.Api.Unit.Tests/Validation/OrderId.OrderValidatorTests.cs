@@ -2,8 +2,9 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 
 using Orders.Api.Unit.Tests.Helpers;
+using Orders.Api.Validation;
 
-namespace Orders.Api.Unit.Tests.Validators;
+namespace Orders.Api.Unit.Tests.Validation;
 
 public partial class OrderValidatorTests
 {

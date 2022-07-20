@@ -4,7 +4,7 @@
 using FluentValidation;
 using Orders.Api.Models;
 
-namespace Orders.Api.Validators;
+namespace Orders.Api.Validation;
 
 public class OrdersRequestValidator : AbstractValidator<OrdersRequest>
 {
@@ -13,17 +13,23 @@ public class OrdersRequestValidator : AbstractValidator<OrdersRequest>
     {
         RuleFor(x => x.Orders)
             .NotEmpty()
+            .WithMessage(ErrorMessages.OrderRequestCannotBeEmpty)
             .WithErrorCode(ErrorCodes.OrderRequestCannotBeEmpty);
         RuleFor(x => x.Orders)
-            .Must(OrdersMustHaveUniqueIdWithinTheRequest!)
+            .Must(OrdersMustHaveUniqueIdWithinTheRequest)
+            .WithMessage(ErrorMessages.OrdersMustHaveUniqueId)
             .WithErrorCode(ErrorCodes.OrdersMustHaveUniqueId);
         RuleForEach(x => x.Orders)
             .SetValidator(basketOrderValidatorFactory());
     }
 
-    private bool OrdersMustHaveUniqueIdWithinTheRequest(IReadOnlyCollection<Order>? orders)
+    private static bool OrdersMustHaveUniqueIdWithinTheRequest(
+        OrdersRequest request,
+        IReadOnlyCollection<Order>? orders,
+        ValidationContext<OrdersRequest> validationContext)
     {
         var orderSet = new HashSet<string>();
+        var repeatingId = "";
 
         foreach (var order in orders ?? Enumerable.Empty<Order?>())
         {
@@ -34,7 +40,7 @@ public class OrdersRequestValidator : AbstractValidator<OrdersRequest>
 
             if (!orderSet.Add(order.OrderId))
             {
-                return false;
+                repeatingId = order.OrderId;
             }
 
             foreach (var childOrder in order.ChildOrders ?? Enumerable.Empty<Order?>())
@@ -42,11 +48,12 @@ public class OrdersRequestValidator : AbstractValidator<OrdersRequest>
                 if (childOrder?.OrderId is not null &&
                     !orderSet.Add(childOrder.OrderId))
                 {
-                    return false;
+                    repeatingId = order.OrderId;
                 }
             }
         }
+        validationContext.MessageFormatter.AppendArgument("OrderId", repeatingId);
 
-        return true;
+        return repeatingId == "";
     }
 }

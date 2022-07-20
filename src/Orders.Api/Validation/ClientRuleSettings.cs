@@ -3,7 +3,7 @@
 
 using Orders.Api.Models;
 
-namespace Orders.Api.Validators;
+namespace Orders.Api.Validation;
 
 public class ClientRuleSettings
 {

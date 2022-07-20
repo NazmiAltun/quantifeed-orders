@@ -1,7 +1,7 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
-using Orders.Api.Validators;
+using Orders.Api.Validation;
 using Orders.Test.Common;
 
 namespace Orders.Api.Unit.Tests.Helpers;

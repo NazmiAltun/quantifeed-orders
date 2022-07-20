@@ -3,7 +3,7 @@
 
 namespace Orders.Api.Extensions;
 
-public static class OrdersWebApplicationBuilderExtensions
+internal static class OrdersWebApplicationBuilderExtensions
 {
     public static OrdersApiSettings LoadSettings(this WebApplicationBuilder webApplicationBuilder)
     {
