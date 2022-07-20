@@ -31,12 +31,22 @@ public static class OrdersServiceCollectionExtensions
         serviceCollection.AddSingleton(sp =>
             new OrdersRequestValidator(sp.GetRequiredService<BasketOrderValidator>));
 
-        serviceCollection.AddSingleton<IConnectionMultiplexer>(_ =>
-            ConnectionMultiplexer.Connect(settings.RedisConnectionString!));
-
         serviceCollection.AddSingleton<OrdersRepository>();
 
         return serviceCollection;
+    }
+
+    public static IServiceCollection AddRedis(
+        this IServiceCollection serviceCollection,
+        string connectionString)
+    {
+        if (string.IsNullOrWhiteSpace(connectionString))
+        {
+            throw new InvalidOperationException("Redis connection string is missing.");
+        }
+
+        return serviceCollection.AddSingleton<IConnectionMultiplexer>(_ =>
+            ConnectionMultiplexer.Connect(connectionString));
     }
 
     private static HashSet<string> LoadCurrencyCodes()

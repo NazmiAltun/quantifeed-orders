@@ -6,8 +6,10 @@ using Orders.Api.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 var settings = builder.LoadSettings();
-builder.Services.AddOrdersServices(settings);
+
+builder.Services.AddRedis(builder.Configuration.GetConnectionString("Redis"));
 builder.Services.AddGrpc();
+builder.Services.AddOrdersServices(settings);
 
 var app = builder.Build();
 app.UseRouting();
@@ -17,7 +19,7 @@ app.UseEndpoints(endpoints =>
 });
 await app.RunAsync();
 
-namespace Orders.Api
+namespace Orders.Api    // Hack for integration tests
 {
     public partial class Program { }
 }

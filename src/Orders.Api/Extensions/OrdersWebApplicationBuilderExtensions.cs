@@ -17,8 +17,7 @@ public static class OrdersWebApplicationBuilderExtensions
     private static void ValidateSettings(OrdersApiSettings settings)
     {
         if (settings.BasketOrderChildSumWeight == 0 ||
-            settings.ClientRuleSettings?.Length == 0 ||
-            string.IsNullOrWhiteSpace(settings.RedisConnectionString))
+            settings.ClientRuleSettings?.Length == 0)
         {
             throw new InvalidOperationException("Settings are missing or failed to read.");
         }

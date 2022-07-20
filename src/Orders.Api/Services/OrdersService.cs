@@ -2,6 +2,7 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 
 using Grpc.Core;
+using Orders.Api.Helpers;
 using Orders.Api.Repositories;
 using Orders.Api.Validators;
 using Orders.Proto;

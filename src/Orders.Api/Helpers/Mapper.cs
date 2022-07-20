@@ -9,7 +9,7 @@ using OrdersRequest = Orders.Proto.OrdersRequest;
 using OrderType = Orders.Api.Models.OrderType;
 using ValidationResult = Orders.Proto.ValidationResult;
 
-namespace Orders.Api;
+namespace Orders.Api.Helpers;
 
 internal static class Mapper
 {

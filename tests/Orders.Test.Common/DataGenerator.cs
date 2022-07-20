@@ -8,11 +8,8 @@ namespace Orders.Test.Common;
 public static class DataGenerator
 {
     private static readonly string[] Symbols = { "$", "€", "₺" };
-
     private static int _seed = Environment.TickCount;
-
     private static readonly ThreadLocal<Random> Random = new(() => new Random(Interlocked.Increment(ref _seed)));
-
     public static readonly string[] Currencies = {
         "USD",
         "HKD",

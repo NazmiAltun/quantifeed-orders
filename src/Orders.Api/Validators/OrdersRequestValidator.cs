@@ -15,13 +15,13 @@ public class OrdersRequestValidator : AbstractValidator<OrdersRequest>
             .NotEmpty()
             .WithErrorCode(ErrorCodes.OrderRequestCannotBeEmpty);
         RuleFor(x => x.Orders)
-            .Must(OrdersMustHaveUniqueId!)
+            .Must(OrdersMustHaveUniqueIdWithinTheRequest!)
             .WithErrorCode(ErrorCodes.OrdersMustHaveUniqueId);
         RuleForEach(x => x.Orders)
             .SetValidator(basketOrderValidatorFactory());
     }
 
-    private bool OrdersMustHaveUniqueId(IReadOnlyCollection<Order>? orders)
+    private bool OrdersMustHaveUniqueIdWithinTheRequest(IReadOnlyCollection<Order>? orders)
     {
         var orderSet = new HashSet<string>();
 

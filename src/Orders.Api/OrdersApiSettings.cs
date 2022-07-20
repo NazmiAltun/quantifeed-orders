@@ -9,5 +9,4 @@ public class OrdersApiSettings
 {
     public ClientRuleSettings[]? ClientRuleSettings { get; set; }
     public decimal BasketOrderChildSumWeight { get; set; }
-    public string? RedisConnectionString { get; set; }
 }
