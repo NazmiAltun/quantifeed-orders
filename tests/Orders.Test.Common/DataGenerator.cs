@@ -27,4 +27,5 @@ public static class DataGenerator
     public static string Symbol() => Symbols[Random.Value!.Next(Symbols.Length)];
     public static decimal NotionalAmount() => Random.Value!.Next(10, 1000);
     public static decimal Weight() => Random.Value!.Next(1, 100) / 100m;
+    public static int Next(int min,int max) => Random.Value!.Next(min, max);
 }

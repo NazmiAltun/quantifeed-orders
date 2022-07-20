@@ -3,8 +3,8 @@
 
 using FluentAssertions;
 using Orders.Api.Integration.Tests.Fixture;
-using Orders.Api.Integration.Tests.Helpers;
 using Orders.Proto;
+using Orders.Test.Common;
 using StackExchange.Redis;
 
 namespace Orders.Api.Integration.Tests;

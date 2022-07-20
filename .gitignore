@@ -36,3 +36,4 @@ PublishProfiles/
 coverage/
 .sonarqube/
 node_modules/
+logs/

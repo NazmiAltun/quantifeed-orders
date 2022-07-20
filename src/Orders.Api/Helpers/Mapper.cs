@@ -1,6 +1,7 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
+using System.Globalization;
 using FluentValidation.Results;
 using Orders.Api.Extensions;
 using Orders.Api.Models;
@@ -56,7 +57,7 @@ internal static class Mapper
             PropertyName = failure.PropertyName,
             ErrorCode = failure.ErrorCode,
             ErrorMessage = failure.ErrorMessage,
-            AttemptedValue = (string?)failure.AttemptedValue ?? ""
+            AttemptedValue = Convert.ToString(failure.AttemptedValue, CultureInfo.InvariantCulture)
         });
 
         response.ValidationResults.AddRange(orderValidationResults);

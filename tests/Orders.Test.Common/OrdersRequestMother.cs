@@ -2,11 +2,10 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 
 using Orders.Proto;
-using Orders.Test.Common;
 
-namespace Orders.Api.Integration.Tests.Helpers;
+namespace Orders.Test.Common;
 
-internal class OrdersRequestMother
+public class OrdersRequestMother
 {
     public static OrdersRequest Create(
         Action<OrdersRequest> with,
