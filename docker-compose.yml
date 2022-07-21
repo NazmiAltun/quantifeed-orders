@@ -23,7 +23,7 @@ services:
       - StartRequestCount=1000
       - RampUpRequestCount=500
       - TotalRequestCount=100000000
-      - InvalidRequestPercent=100
+      - InvalidRequestPercent=0
       - ExistingIdRequestPercent=0
     depends_on:
       - api
