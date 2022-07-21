@@ -39,9 +39,8 @@ There're some assumptions made regarding to the API design since some of the req
 ## Performance Improvements That Can Be Made
 * Some trade-offs can be made based on the use cases. Example; how often the API would receive orders with order Id that already exists in the db ? If that happens too often, it might be useful to have another caching layer that validates order ids first before persisting them. Since this is ambiguous, it wasn't used in the solution to keep solution simpler. Some of the known use cases/business cases can allow to make different trade-offs.
 
-* [Redis Cluster](https://redis.io/docs/manual/scaling/) or any other third party redis clustering solutions can  be used if redis becomes the bottleneck.
+* [Redis Cluster](https://redis.io/docs/manual/scaling/) or any other third party redis clustering solutions can be used if redis becomes the bottleneck.
 
-* Flattened orders are stored as json strings for simplicity. A more performant alternative would be, sending order properties separately and storing them as values in the hashset with redis HSETNX command. This might improve the performance since we'll avoid JSON serialization and we'll send smaller payload to redis. However, this would be less readable solution with more complex db writes(lua script).
-
+* Flattened orders are stored as json strings for simplicity. An alternative solution would be, sending order properties separately and storing them as values in the hashset with redis HSET command. This approach might or might not improve the performance, needs to be tested.
 
 * For validations FluentValidation framework is used which is a general-purpose framework. Even though it has internal caching mechanism that caches expression trees that are defined as rules. More performant options can be considered, if micro level optimizations are really important.
