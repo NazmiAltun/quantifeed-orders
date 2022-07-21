@@ -13,11 +13,9 @@ RUN dotnet restore
 
 COPY . .
 ARG BUILDCONFIG=Release
-RUN dotnet build ./src/Orders.Api/Orders.Api.csproj -c $BUILDCONFIG --warnaserror --no-restore -v Quiet --nologo
+RUN dotnet build Orders.sln -c $BUILDCONFIG --no-restore -v Quiet --nologo
 RUN dotnet publish ./src/Orders.Api/Orders.Api.csproj -c $BUILDCONFIG -o ./api --no-restore --no-build  -v Quiet --nologo
-RUN dotnet build ./tests/Orders.Api.Stress.Test/Orders.Api.Stress.Test.csproj -c $BUILDCONFIG --no-restore -v Quiet --nologo
 RUN dotnet publish ./tests/Orders.Api.Stress.Test/Orders.Api.Stress.Test.csproj  -c $BUILDCONFIG -o ./perftest --no-restore --no-build  -v Quiet --nologo
-
 
 FROM base AS api
 WORKDIR /app

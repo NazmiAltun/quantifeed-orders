@@ -20,6 +20,7 @@ services:
       target: perftest
     environment:
       - GrpcApiUrl=http://api:5001
+      - InvalidRequestPercent=100
     depends_on:
       - api
   redis:

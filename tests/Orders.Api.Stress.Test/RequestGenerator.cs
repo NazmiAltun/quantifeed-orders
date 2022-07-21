@@ -10,6 +10,18 @@ internal static class RequestGenerator
 {
     public static OrdersRequest Generate()
     {
+        var randomNo = DataGenerator.Next(1, 101);
+
+        if (randomNo <= Configuration.InvalidRequestPercent)
+        {
+            return OrdersRequestMother.Create(o =>
+            {
+                o.Orders.First().ClientId = "";
+                o.Orders.First().ChildOrders.First().Weight = 2;
+                o.Orders.First().ChildOrders.Last().NotionalAmount = int.MaxValue;
+            });
+        }
+
         return OrdersRequestMother.Create();
     }
 }

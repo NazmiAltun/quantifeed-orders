@@ -6,6 +6,7 @@ using Orders.Api.Integration.Tests.Fixture;
 using Orders.Proto;
 using Orders.Test.Common;
 using StackExchange.Redis;
+using Xunit;
 
 namespace Orders.Api.Integration.Tests;
 
@@ -56,22 +57,22 @@ public class OrderServiceTests : IClassFixture<WebApplicationFactory>
         await ShouldHaveValidationErrorsAndOrdersNotPersisted(response, request);
     }
 
-    private async Task ShouldBeValidatedAndPersisted(
+    private Task ShouldBeValidatedAndPersisted(
         ProcessOrdersResponse response,
         OrdersRequest request)
     {
         response.Successful.Should().BeTrue();
         response.ValidationResults.Should().BeEmpty();
-        await OrdersShouldBePersisted(GetOrderIds(request));
+        return OrdersShouldBePersisted(GetOrderIds(request));
     }
 
-    private async Task ShouldHaveValidationErrorsAndOrdersNotPersisted(
+    private Task ShouldHaveValidationErrorsAndOrdersNotPersisted(
         ProcessOrdersResponse response,
         OrdersRequest request)
     {
         response.Successful.Should().BeFalse();
         response.ValidationResults.Should().NotBeEmpty();
-        await OrdersShouldNotBePersisted(GetOrderIds(request));
+        return OrdersShouldNotBePersisted(GetOrderIds(request));
     }
 
     private async Task OrdersShouldBePersisted(IEnumerable<string> orderIds)

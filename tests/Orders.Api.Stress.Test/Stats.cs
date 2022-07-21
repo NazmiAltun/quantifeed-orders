@@ -40,10 +40,10 @@ public static class Stats
         Stopwatch.Start();
     }
 
-    public static void EndStep(int stepSize)
+    public static void EndStep(int requestCount)
     {
         Stopwatch.Stop();
-        Interlocked.Exchange(ref _requestPerSecond, (int)(stepSize / Stopwatch.Elapsed.TotalSeconds));
+        Interlocked.Exchange(ref _requestPerSecond, (int)(requestCount / Stopwatch.Elapsed.TotalSeconds));
     }
 
     public static void Display()

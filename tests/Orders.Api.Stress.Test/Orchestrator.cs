@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+ // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
 using System.Text.Json;
@@ -26,22 +26,22 @@ public static class Orchestrator
 
     public static async Task StressAsync()
     {
-        var step = Configuration.StartRequestCount;
+        var requestCount = Configuration.StartRequestCount;
 
         for (var count = Configuration.StartRequestCount;
              count < Configuration.TotalRequestCount;
-             count += step)
+             count += requestCount)
         {
             Stats.StartStep();
-            var calls = Enumerable.Range(0, step)
+            var calls = Enumerable.Range(0, requestCount)
                 .Select(async _ => await SendRequestAsync())
                 .ToArray();
             await Task.WhenAll(calls);
 
-            Console.Write($"Step: {step} ");
-            Stats.EndStep(step);
+            Console.Write($"Sent Request Count: {requestCount} ");
+            Stats.EndStep(requestCount);
             Stats.Display();
-            step += Configuration.RampUpRequestCount;
+            requestCount += Configuration.RampUpRequestCount;
         }
     }
 
@@ -57,13 +57,11 @@ public static class Orchestrator
             }
             else
             {
-                Console.WriteLine(JsonSerializer.Serialize(response));
                 Stats.IncrementFail();
             }
         }
-        catch (Exception ex)
+        catch
         {
-            Console.WriteLine(ex);
             Stats.IncrementFail();
         }
     }
