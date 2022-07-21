@@ -10,9 +10,6 @@ internal static class RequestGenerator
 {
     public static OrdersRequest Generate()
     {
-        var basketCount = DataGenerator.Next(2, 10);
-        var stockOrderPerBasket = DataGenerator.Next(5, 20);
-
-        return OrdersRequestMother.Create(basketCount, stockOrderPerBasket);
+        return OrdersRequestMother.Create();
     }
 }

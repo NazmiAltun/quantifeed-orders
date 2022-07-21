@@ -9,6 +9,7 @@ namespace Orders.Api.Repositories;
 
 public class OrdersRepository
 {
+    //TODO:Optimize lua
     private const string SaveOrderScript = @"
         local result = {}
         local failed = false
@@ -18,10 +19,12 @@ public class OrdersRepository
                 failed = true
             end
         end
-        if( failed ) -- rollback the whole request if any of the orders failed
+        if( failed ) -- rollback previously set hashes
         then
             for i=1, #KEYS do
-               redis.call('HDEL',KEYS[i],'order')
+                if( result[i] == 1 ) then
+                    redis.call('HDEL',KEYS[i],'order')
+                end
             end
         end
         return result
