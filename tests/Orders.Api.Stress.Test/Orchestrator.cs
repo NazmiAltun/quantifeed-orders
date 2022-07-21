@@ -1,8 +1,7 @@
  // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
-using System.Text.Json;
-using Grpc.Net.Client;
+ using Grpc.Net.Client;
 using Orders.Proto;
 
 namespace Orders.Api.Stress.Test;
@@ -38,7 +37,7 @@ public static class Orchestrator
                 .ToArray();
             await Task.WhenAll(calls);
 
-            Console.Write($"Sent Request Count: {requestCount} ");
+            Console.Write($"Request Size: {requestCount} ");
             Stats.EndStep(requestCount);
             Stats.Display();
             requestCount += Configuration.RampUpRequestCount;

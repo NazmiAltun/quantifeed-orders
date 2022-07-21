@@ -20,13 +20,16 @@ public static class Configuration
         RampUpRequestCount = int.Parse(config["RampUpRequestCount"], CultureInfo.InvariantCulture);
         TotalRequestCount = int.Parse(config["TotalRequestCount"], CultureInfo.InvariantCulture);
         InvalidRequestPercent = int.Parse(config["InvalidRequestPercent"], CultureInfo.InvariantCulture);
+        ExistingIdRequestPercent = int.Parse(config["ExistingIdRequestPercent"], CultureInfo.InvariantCulture);
 
-        Console.WriteLine("Configuration read...");
-        Console.WriteLine($"Url: ${Url}");
+        Console.WriteLine("Settings");
+        Console.WriteLine("========");
+        Console.WriteLine($"Url: {Url}");
         Console.WriteLine($"StartRequestCount: {StartRequestCount}");
         Console.WriteLine($"RampUpRequestCount: {RampUpRequestCount}");
         Console.WriteLine($"TotalRequestCount: {TotalRequestCount}");
         Console.WriteLine($"InvalidRequestPercent: {InvalidRequestPercent}");
+        Console.WriteLine($"ExistingIdRequestPercent: {ExistingIdRequestPercent}");
     }
 
     public static string Url { get; }
@@ -34,4 +37,5 @@ public static class Configuration
     public static int RampUpRequestCount { get; }
     public static long TotalRequestCount { get; }
     public static int InvalidRequestPercent { get; }
+    public static int ExistingIdRequestPercent { get; }
 }

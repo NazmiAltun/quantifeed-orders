@@ -20,7 +20,11 @@ services:
       target: perftest
     environment:
       - GrpcApiUrl=http://api:5001
+      - StartRequestCount=1000
+      - RampUpRequestCount=500
+      - TotalRequestCount=100000000
       - InvalidRequestPercent=100
+      - ExistingIdRequestPercent=0
     depends_on:
       - api
   redis:

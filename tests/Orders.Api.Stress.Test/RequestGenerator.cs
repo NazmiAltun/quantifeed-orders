@@ -8,6 +8,8 @@ namespace Orders.Api.Stress.Test;
 
 internal static class RequestGenerator
 {
+    private static volatile OrdersRequest _lastRequest;
+
     public static OrdersRequest Generate()
     {
         var randomNo = DataGenerator.Next(1, 101);
@@ -22,6 +24,13 @@ internal static class RequestGenerator
             });
         }
 
-        return OrdersRequestMother.Create();
+        if (randomNo > Configuration.InvalidRequestPercent &&
+            randomNo <= Configuration.InvalidRequestPercent + Configuration.ExistingIdRequestPercent)
+        {
+            return _lastRequest;
+        }
+
+        _lastRequest = OrdersRequestMother.Create();
+        return _lastRequest;
     }
 }
