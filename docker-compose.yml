@@ -1,6 +1,27 @@
 version: '3.8'
 
 services:
+  api:
+    image: nazmialtun/orders-api:latest
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: api
+    environment:
+      - ConnectionStrings__Redis=redis:6379,allowAdmin=True,connectTimeout=5000,defaultDatabase=0
+      - GrpcPort= 5001
+    depends_on:
+      - redis
+  perf-test:
+    image: nazmialtun/orders-api-perf-test:latest
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: perftest
+    environment:
+      - GrpcApiUrl=http://api:5001
+    depends_on:
+      - api
   redis:
     image: redis
     restart: always

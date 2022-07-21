@@ -1,0 +1,35 @@
+﻿# User-specific files
+*.suo
+*.user
+
+# Git
+.git
+.gitignore
+.run/
+
+# Build results
+**/[Bb]in/
+**/[Oo]bj/
+**/[Oo]ut/
+
+# Test results
+**/TestResults
+
+
+# MacOS-specific
+**/.DS_Store
+
+#DockerFile itself
+*Dockerfile
+docker-compose.yml
+.dockerignore
+# .env file contains default environment variables for docker
+.env
+
+#Readme and docs
+*.md
+docs
+*.log
+##-------IDE--------
+# Visual Studio 2015 cache/options directory
+.vs/

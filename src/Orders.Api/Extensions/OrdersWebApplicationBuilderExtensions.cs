@@ -17,9 +17,11 @@ internal static class OrdersWebApplicationBuilderExtensions
     private static void ValidateSettings(OrdersApiSettings settings)
     {
         if (settings.BasketOrderChildSumWeight == 0 ||
-            settings.ClientRuleSettings?.Length == 0)
+            settings.ClientRuleSettings == null ||
+            settings.ClientRuleSettings.Length == 0 ||
+            settings.ClientRuleSettings.Any(s => string.IsNullOrEmpty(s.ClientId)))
         {
-            throw new InvalidOperationException("Settings are missing or failed to read.");
+            throw new InvalidOperationException("Settings are missing or invalid.");
         }
     }
 }
