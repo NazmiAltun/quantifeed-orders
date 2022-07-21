@@ -11,7 +11,7 @@ Api that's developed based on the requirements provided by QuantiFeed
 
 ## How to run
 * Integration tests and the API itself requires redis. For local development and testing redis defined in the docker-compose can be used by running  `docker-compose up -d redis` shell command
-* To run stress tests execute  `docker-compose up stress-test` command in terminal or alternative dotnet-cli or other IDEs can be used.
+* To run stress tests run `./stress.sh`  script located in the repo
 
 ## Assumptions
 There're some assumptions made regarding to the API design since some of the requirements are either unclear or ambiguous

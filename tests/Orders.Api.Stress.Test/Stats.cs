@@ -36,6 +36,7 @@ public static class Stats
 
     public static void StartStep()
     {
+        Stopwatch.Reset();
         Stopwatch.Start();
     }
 
@@ -43,7 +44,6 @@ public static class Stats
     {
         Stopwatch.Stop();
         Interlocked.Exchange(ref _requestPerSecond, (int)(stepSize / Stopwatch.Elapsed.TotalSeconds));
-        Stopwatch.Reset();
     }
 
     public static void Display()

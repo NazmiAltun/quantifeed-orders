@@ -9,22 +9,19 @@ namespace Orders.Api.Repositories;
 
 public class OrdersRepository
 {
-    //TODO:Optimize lua
     private const string SaveOrderScript = @"
         local result = {}
         local failed = false
         for i=1, #KEYS do
             result[i] = redis.call('HSETNX',KEYS[i],'order',ARGV[i])
             if( result[i] == 0 ) then
-                failed = true
+              failed = true
             end
         end
         if( failed ) -- rollback previously set hashes
         then
             for i=1, #KEYS do
-                if( result[i] == 1 ) then
-                    redis.call('HDEL',KEYS[i],'order')
-                end
+               redis.call('HDEL',KEYS[i],'order')
             end
         end
         return result
