@@ -36,10 +36,13 @@ There're some assumptions made regarding to the API design since some of the req
 * **Flattening the orders**: redis [HSETNX](https://redis.io/commands/hsetnx/) is used to store orders and orderId is used for hash key. However, this wouldn't work if we store the orders in the format we receive them , since the orderId of the child orders will be ignored in child/parent structure. We want to ensure all the orders (both stock and basket) have unique id. Hence we need to flatten the orders before storing them. Which is a trade-off that'll make the reads a bit more complicated and will make writes easier and faster.
 * **Using Grpc protocol** : Features such as; binary messaging format and http/2.0 protocol(bidirectional streaming) makes GRPC more performant option than traditional REST APIs.
 
+## Caveats
+* This solution optimized for non-clustered redis. It will not work with clustered redis because the code handles multiple keys at once and it'll be a problem since each redis nodes/shards supposed to hold a range of keys. An alternative strategy needs to be implemented to support clustered redis as well.
+
 ## Performance Improvements That Can Be Made
 * Some trade-offs can be made based on the use cases. Example; how often the API would receive orders with order Id that already exists in the db ? If that happens too often, it might be useful to have another caching layer that validates order ids first before persisting them. Since this is ambiguous, it wasn't used in the solution to keep solution simpler. Some of the known use cases/business cases can allow to make different trade-offs.
 
-* [Redis Cluster](https://redis.io/docs/manual/scaling/) or any other third party redis clustering solutions can be used if redis becomes the bottleneck.
+* [Redis Cluster](https://redis.io/docs/manual/scaling/) or any other third party redis clustering solutions can be used if redis becomes the bottleneck , as mentioned above this will require changes in the code as mentioned above.
 
 * Flattened orders are stored as json strings for simplicity. An alternative solution would be, sending order properties separately and storing them as values in the hashset with redis HSET command. This approach might or might not improve the performance, needs to be tested.
 
