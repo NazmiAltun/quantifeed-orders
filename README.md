@@ -6,12 +6,12 @@ A solution developed based on the requirements provided by QuantiFeed for exerci
 
 * **dotnet 6 SDK** : To build the solution
 * **dotnet 6 Runtime** : To run the API
-* **redis server**: Ideally the latest version or a version that support lua scripting.
+* **redis server**: Ideally the latest version or a version that supports lua scripting.
 * **docker & docker-compose** (optional) : Ideally the latest version. To run redis dependency and stress/perf tests.
 
 ## How to run
-* Integration tests and the API itself require redis. For local development and testing redis service added in the docker-compose that can be used by running  `docker-compose up -d redis` shell command
-* To run stress tests run `docker-compose up perf-test`  command in the terminal
+* Integration tests and the API itself require redis. For local development and testing redis service defined in the docker-compose that can be used by running  `docker-compose up -d redis` shell command
+* To run perf tests execute `docker-compose up perf-test`  command in the terminal
 
 ## Stress Test Tool
 A small,primitive console app is developed to performance test the api. Following environment variables/configurations can be used to configure the app.
@@ -38,6 +38,7 @@ There're some assumptions made regarding to the API design since some of the req
 
 ## Caveats
 * This solution optimized for non-clustered redis. It will not work with clustered redis because the code handles multiple keys at once and it'll be a problem since each redis nodes/shards supposed to hold a range of keys. An alternative strategy needs to be implemented to support clustered redis as well.
+* Only GRPC is supported  REST API is not implemented as mentioned above. To support REST, a trivial amount of development is required.
 
 ## Performance Improvements That Can Be Made
 * Some trade-offs can be made based on the use cases. Example; how often the API would receive orders with order Id that already exists in the db ? If that happens too often, it might be useful to have another caching layer that validates order ids first before persisting them. Since this is ambiguous, it wasn't used in the solution to keep solution simpler. Some of the known use cases/business cases can allow to make different trade-offs.
