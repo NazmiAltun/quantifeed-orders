@@ -26,9 +26,9 @@ A small,primitive console app is developed to performance test the api. Followin
 There're some assumptions made regarding to the API design since some of the requirements were ambiguous
 
 * Client that will consume the API supports Grpc
-* Currency code check is case insensitive. e.g;  USD is accepted but usd is not accepted.
+* Currency code check is case sensitive. e.g;  USD is accepted but usd is not accepted.
 * Requests are executed in all or nothing manner ; the entire request is rolled back if persisting one of the orders fails due to orderId duplication
-* Currency list for validation comes from currencies.json file in the solution which is randomly found on the github. It's assumed it contains all the valid currencies
+* Currency list for validation comes from currencies.json file in the solution which is randomly found on the github. It's assumed that the file contains all the valid currencies
 
 ## Steps taken to ensure high performance
 * **Redis is the choice for db**  : redis is preferred to persist orders. Since, the requirements don't mention about an ACID compilant solution. Redis performs better since it's an in-memory db that comes with optional durability (ideally AOF) and the orders records we need to persist are not huge.
